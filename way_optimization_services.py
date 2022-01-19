@@ -3,20 +3,20 @@ import networkx as nx
 import math_module
 from point import Point
 
-class PathOptimizationService(ABC):
+class WayOptimizationService(ABC):
 
     @abstractmethod
     def get_optimal_path(self, points: list) -> list:
         pass
 
 
-class PathOptimizationBySort(PathOptimizationService):
+class WayOptimizationBySort(WayOptimizationService):
 
     def get_optimal_path(self, points: list) -> list:
         return sorted(points, key=lambda point: point.x)
 
 
-class PathOptimizationByTraverSalMethod(PathOptimizationService):
+class WayOptimizationByTraverSalMethod(WayOptimizationService):
 
     def __init__(self) -> None:
         self._graph = nx.Graph()
