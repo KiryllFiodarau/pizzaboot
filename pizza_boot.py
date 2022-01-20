@@ -2,6 +2,7 @@ from point import Point
 from way_optimization_services import WayOptimizationBySort, WayOptimizationByTraverSalMethod
 from route_services import RouteServiceByAction
 import sys
+from converters import PointConvertorByRegex
 
 points = [Point(0, 0), Point(1, 3), Point(4, 4), Point(4, 2), Point(4, 2), Point(0, 1), Point(3, 2), Point(2, 3),
           Point(4, 1)]
@@ -22,13 +23,12 @@ new_points = path_opt.get_optimal_path(points)
 print(new_points)
 print(route_services.get_route(new_points))
 
-
 if __name__ == '__main__':
 
-    if len(sys.argv) == 1:
+    if len(sys.argv) == 2:
         print(sys.argv[1])
+        point_converter_regex = PointConvertorByRegex('^([1-9][0-9]*)x([1-9][0-9]*)( \([0-9]+\, [0-9]+\))+$', '\(([0-9]+)\, ([0-9]+)\)', '([1-9][0-9]*)x([1-9][0-9]*)')
+        print(point_converter_regex.get_way(sys.argv[1]))
+
     else:
         print("Invalid input arguments")
-
-
-
