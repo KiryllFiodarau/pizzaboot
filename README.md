@@ -53,4 +53,5 @@ ENNNDEEEND
 ```
 ### Run tests
 ```
+python tests.py
 ```
