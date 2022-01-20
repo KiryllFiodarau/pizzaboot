@@ -1,21 +1,26 @@
 from abc import ABC, abstractmethod
 from enums import Action
-
+from way_optimization_services import WayOptimizationService
 
 class RouteService(ABC):
 
     @abstractmethod
-    def get_route(self, optimal_path: list) -> str:
+    def get_route(self, input_data: str) -> str:
         pass
 
 
 class RouteServiceByAction(RouteService):
 
-    def get_route(self, optimal_path: list) -> str:
+    def __init__(self, way_optimizer: WayOptimizationService):
+        self._way_optimizer = way_optimizer
+
+    def get_route(self, input_data: str) -> str:
+
+        optimal_way = self._way_optimizer.get_optimal_way(input_data)
         actions = []
-        for i in range(len(optimal_path) - 1):
-            x_difference = optimal_path[i + 1].x - optimal_path[i].x
-            y_difference = optimal_path[i + 1].y - optimal_path[i].y
+        for i in range(len(optimal_way) - 1):
+            x_difference = optimal_way[i + 1].x - optimal_way[i].x
+            y_difference = optimal_way[i + 1].y - optimal_way[i].y
             if x_difference == 0.0 and y_difference == 0.0:
                 actions.append(Action.DROP.value)
             else:

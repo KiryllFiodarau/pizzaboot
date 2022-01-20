@@ -2,27 +2,38 @@ from abc import ABC, abstractmethod
 import networkx as nx
 import math_module
 from point import Point
+from converters import PointConvertor
+
 
 class WayOptimizationService(ABC):
 
     @abstractmethod
-    def get_optimal_way(self, points: list) -> list:
+    def get_optimal_way(self, input_data: str) -> list:
         pass
 
 
 class WayOptimizationBySort(WayOptimizationService):
 
-    def get_optimal_way(self, points: list) -> list:
+    def __init__(self, convertor: PointConvertor) -> None:
+        self._convertor = convertor
+
+    def get_optimal_way(self, input_data: str) -> list:
+
+        points = self._convertor.get_way(input_data)
+
         return sorted(points, key=lambda point: point.x)
 
 
 class WayOptimizationByTraverSalMethod(WayOptimizationService):
 
-    def __init__(self) -> None:
+    def __init__(self, convertor: PointConvertor) -> None:
         self._graph = nx.Graph()
+        self._convertor = convertor
 
-    def get_optimal_way(self, points: list) -> list:
+    def get_optimal_way(self, input_data: str) -> list:
 
+        points = self._convertor.get_way(input_data)
+        self.init_edge(points)
         mst = nx.minimum_spanning_tree(self._graph)
         nodes = list(nx.edge_dfs(mst, source=0))
         optimization_path = [Point(0, 0)]
