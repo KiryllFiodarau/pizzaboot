@@ -33,4 +33,23 @@ class PointConvertorByRegex(PointConvertor):
                 else:
                     raise AttributeError('The point goes beyond the boundaries of the field')
 
-        return results
+        return self.add_start_point(results)
+
+    @staticmethod
+    def add_start_point(points: list) -> list:
+
+        if points[0].x == 0 and points[0].y == 0:
+            return points
+        else:
+            index_point = 0
+            for i in range(len(points)):
+                if points[i].x == 0 and points[i].y == 0:
+                    index_point = i
+                    break
+            if index_point:
+                points.remove(index_point)
+                points.insert(0, Point(0, 0))
+            else:
+                points.insert(0, Point(0, 0))
+
+        return points
