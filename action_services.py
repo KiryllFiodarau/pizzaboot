@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from enums import Action
-from house import House
 
 
 class ActionService(ABC):

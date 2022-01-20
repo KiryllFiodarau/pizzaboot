@@ -7,7 +7,7 @@ class House:
         self.x = x
         self.y = y
 
-    def is_point_start(self) -> bool:
+    def is_house_first(self) -> bool:
 
         return self._x == 0 and self._y == 0
 
@@ -27,7 +27,7 @@ class House:
     @x.setter
     def x(self, x: int) -> None:
         if x < 0:
-            raise ValueError('Negative point!')
+            raise ValueError('Negative coordinate!')
         self._x = x
 
     @property
@@ -37,7 +37,7 @@ class House:
     @y.setter
     def y(self, y: int) -> None:
         if y < 0:
-            raise ValueError('Negative point!')
+            raise ValueError('Negative coordinate!')
         self._y = y
 
     def __repr__(self):
