@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from enums import Action
 from way_optimization_services import WayOptimizationService
 
+
 class RouteService(ABC):
 
     @abstractmethod
