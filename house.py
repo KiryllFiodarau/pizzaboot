@@ -1,5 +1,7 @@
+import math
 
-class Point:
+
+class House:
 
     def __init__(self, x: int, y: int) -> None:
         self.x = x
@@ -39,4 +41,8 @@ class Point:
         self._y = y
 
     def __repr__(self):
-        return f'Point(x={self.x}, y={self.y})'
+        return f'House(x={self.x}, y={self.y})'
+
+    @staticmethod
+    def distance(house_one, house_two):
+        return math.fabs(house_one.x - house_two.x) + math.fabs(house_one.y - house_two.y)

@@ -1,19 +1,28 @@
-from way_optimization_services import WayOptimizationByTraverSal
-from route_services import RouteServiceByAction
+from house_order_optimization import HouseOrderOptimizationByTraverSal,HouseOrderOptimizationBySort
+from action_services import PizzaBotActionService
 import sys
-from converters import PointConvertorByRegex
+from converters import HouseLocationConverter
 from decouple import config
 
 if __name__ == '__main__':
 
     if len(sys.argv) == 2:
-        point_converter_regex = PointConvertorByRegex(
+        house_location_converter = HouseLocationConverter(
             config('COMMON_PATTERN'),
-            config('POINT_PATTERN'),
+            config('HOUSE_LOCATION_PATTERN'),
             config('FIELD_SIZE_PATTERN'))
-        way_optimization_travel_sal = WayOptimizationByTraverSal(point_converter_regex)
-        route_service = RouteServiceByAction(way_optimization_travel_sal)
-        print(route_service.get_route(sys.argv[1]))
+        houses = house_location_converter.get_houses(sys.argv[1])
+        order_optimizer = None
+
+        if config('HOUSE_ORDER_OPTIMIZATION_MODE') == 'TreverSal':
+            order_optimizer = HouseOrderOptimizationByTraverSal()
+        elif config('HOUSE_ORDER_OPTIMIZATION_MODE') == 'Sort':
+            order_optimizer = HouseOrderOptimizationBySort()
+
+        optimal_houses_order = order_optimizer.get_optimal_houses_order(houses)
+        action_service = PizzaBotActionService()
+        actions = action_service.get_actions(optimal_houses_order)
+        print(actions)
 
     else:
 

@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class Action(Enum):
-    NORTH = 'N'
-    SOUTH = 'S'
-    EAST = 'E'
-    WEST = 'W'
-    DROP = 'D'
+    MOVE_NORTH = 'N'
+    MOVE_SOUTH = 'S'
+    MOVE_EAST = 'E'
+    MOVE_WEST = 'W'
+    DROP_PIZZA = 'D'
