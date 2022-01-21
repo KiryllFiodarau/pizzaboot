@@ -46,15 +46,13 @@ python pizza_boot.py "5x5 (1, 3) (4, 4)"
 output TraverSal optimization:
 
 ENNNDEEEND
-```
-```
-input:  
-python pizza_boot.py "5x5 (1, 3) (4, 4)"
 
 output Sort optimization:
 
 ENNNDEEEND
+
 ```
+
 ### Run tests
 ```
 python tests.py
