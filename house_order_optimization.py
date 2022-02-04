@@ -6,17 +6,17 @@ from house import House
 class HouseOrderOptimization(ABC):
 
     @abstractmethod
-    def get_optimal_houses_order(self, houses: list) -> list:
+    def get_route(self, houses: list, start_point: House) -> list:
         pass
 
 
 class HouseOrderOptimizationBySort(HouseOrderOptimization):
 
-    def get_optimal_houses_order(self, houses: list) -> list:
+    def get_route(self, houses: list, start_point: House) -> list:
 
         try:
-            houses.insert(0, House(0, 0))
             sorted_houses = sorted(houses, key=lambda house: house.x)
+            sorted_houses.insert(0, start_point)
         except AttributeError as attr_ex:
             raise attr_ex
         except Exception as ex:
@@ -30,14 +30,14 @@ class HouseOrderOptimizationByTraverSal(HouseOrderOptimization):
     def __init__(self) -> None:
         self._graph = nx.Graph()
 
-    def get_optimal_houses_order(self, houses: list) -> list:
+    def get_route(self, houses: list, start_point: House) -> list:
 
         try:
-            houses.insert(0, House(0, 0))
+            houses.insert(0, start_point)
             self.init_edge(houses)
             mst = nx.minimum_spanning_tree(self._graph)
             nodes = list(nx.edge_dfs(mst, source=0))
-            optimal_houses_order = [House(0, 0)]
+            optimal_houses_order = [start_point]
             for node in nodes:
                 optimal_houses_order.append(houses[node[1]])
         except nx.exception.NetworkXException as networkx_ex:

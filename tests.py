@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 from house import House
 from converters import HouseOrderOptimization, HouseLocationConverter
-from house_order_optimization import HouseOrderOptimizationByTraverSal,HouseOrderOptimizationBySort
+from house_order_optimization import HouseOrderOptimizationByTraverSal, HouseOrderOptimizationBySort
 import networkx as nx
 
 common_pattern = r'^([1-9][0-9]*)x([1-9][0-9]*)( \([0-9]+\, [0-9]+\))+$'
@@ -43,13 +43,12 @@ class HouseOrderOptimizationByTraverSalTest(unittest.TestCase):
         self._house_order_optimizer = HouseOrderOptimizationByTraverSal()
 
     def test_get_optimal_houses_order_pass(self) -> None:
-        assert self._house_order_optimizer.get_optimal_houses_order(houses_pass_test) == [House(0, 0),
-                                                                                          House(1, 3),
-                                                                                          House(4, 4)]
+        assert self._house_order_optimizer.get_route(houses_pass_test, House(0, 0)) == [House(0, 0), House(1, 3),
+                                                                                        House(4, 4)]
 
     def test_get_optimal_houses_order_fail(self) -> None:
         with self.assertRaises(nx.exception.NetworkXException):
-            self._house_order_optimizer.get_optimal_houses_order(houses_fail_test)
+            self._house_order_optimizer.get_route(houses_fail_test, House(0, 0))
 
 
 class HouseOrderOptimizationBySortTest(unittest.TestCase):
@@ -58,13 +57,12 @@ class HouseOrderOptimizationBySortTest(unittest.TestCase):
         self._house_order_optimizer = HouseOrderOptimizationBySort()
 
     def test_get_optimal_houses_order_pass(self) -> None:
-        assert self._house_order_optimizer.get_optimal_houses_order(houses_pass_sort) == [House(0, 0),
-                                                                                          House(1, 3),
-                                                                                          House(4, 4)]
+        assert self._house_order_optimizer.get_route(houses_pass_sort, House(0, 0)) == [House(0, 0), House(1, 3),
+                                                                                        House(4, 4)]
 
     def test_get_optimal_houses_order_fail(self) -> None:
         with self.assertRaises(AttributeError):
-            self._house_order_optimizer.get_optimal_houses_order(houses_fail_sort)
+            self._house_order_optimizer.get_route(houses_fail_sort, House(0, 0))
 
 
 if __name__ == '__main__':
